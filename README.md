@@ -38,3 +38,6 @@ metadata json,embedding vector(768));
 CREATE INDEX ON vector_store USING HNSW (embedding vector_cosine_ops);
 ```
 ---
+## RAG Pipeline Flow
+
+<img width="2026" height="830" alt="image" src="https://github.com/user-attachments/assets/0a993744-4d8f-4896-a2e7-7c0e721c8889" />
