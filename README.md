@@ -1,43 +1,90 @@
-# RAG Pipeline with Springboot + Postgres (Vector Store)
+<h1 align="center" id="title">RAG With Springboot + PostgreSQL (VectorDB) + ChatModel</h1>
 
-## Overview
+<p align="center"><img src="https://socialify.git.ci/keerthikumarn/springboot-vectordb-rag/image?description=1&amp;font=KoHo&amp;forks=1&amp;issues=1&amp;language=1&amp;name=1&amp;owner=1&amp;pattern=Diagonal+Stripes&amp;pulls=1&amp;stargazers=1&amp;theme=Light" alt="project-image"></p>
 
-This project demonstrates a simple Retrieval Augmented Generation (RAG) pipeline using Spring AI, PGVector as the vector store, and OpenAI for embedding and chat models.
+  
+  
+<h2>🧐 Features</h2>
 
----
-## Components
+Here're some of the project's best features:
 
--   **Spring Boot Application:** The main application that coordinates the entire **Retrieval-Augmented Generation (RAG)** workflow.
--   **PGVector:** A PostgreSQL extension that stores document embeddings and helps find the most relevant documents using similarity search.
--   **OpenAI Embedding Model:** Converts documents and user queries into vector embeddings so they can be compared based on semantic meaning.
--   **OpenAI Chat Model:** Generates a response by using the user's question along with the relevant information retrieved from the vector database.
--   **DocumentLoader:** A Spring component that loads sample documents into the PGVector database automatically when the application starts.
--   **RagService:** The core service that implements the RAG workflow:
-    -   Accepts the user's query.
-    -   Converts the query into an embedding.
-    -   Searches the PGVector database for the most relevant documents.
-    -   Builds a prompt by combining the user's question with the retrieved document content.
-    -   Sends the prompt to the OpenAI Chat Model and returns the generated response.
--   **RagController:** A REST API controller that exposes the `/ai/rag` endpoint, allowing users to interact with the RAG service.
--   **rag-prompt.st:** A prompt template used by the `RagService` to structure the input sent to the AI model, ensuring the response is based on the retrieved document content.
+*   RAG Pipeline with Springboot
+*   PostgreSQL as VectorDB for storing embeddings
+*   ChatModel for Request/Response Model
+*   Locally run embeddings model
 
----
+<h2>🛠️ Installation Steps:</h2>
 
-## Steps to create Vector Store in Postgres
+<p>1. Install pgvector</p>
 
-Install the **pgvector** extension in the **PostgreSQL** - using the respective docker images available for the same.
+```
+https://medium.com/@adarsh.ajay/setting-up-postgresql-with-pgvector-in-docker-a-step-by-step-guide-d4203f6456bd
+```
 
-```sql
+<p>2. Create vector extension</p>
+
+```
 CREATE EXTENSION IF NOT EXISTS vector;
-CREATE EXTENSION IF NOT EXISTS hstore;
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-CREATE  TABLE IF NOT EXISTS vector_store(
-id uuid default uuid_generate_v4() PRIMARY KEY ,content TEXT,
-metadata json,embedding vector(768));
+```
 
+<p>3. Create hstore extension</p>
+
+```
+CREATE EXTENSION IF NOT EXISTS hstore;
+```
+
+<p>4. Include uuid-ossp</p>
+
+```
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+```
+
+<p>5. Create table named vector_store</p>
+
+```
+CREATE  TABLE IF NOT EXISTS vector_store( id uuid default uuid_generate_v4() PRIMARY KEY content TEXT metadata jsonembedding vector(768));
+```
+
+<p>6. Create index on vector_store table</p>
+
+```
 CREATE INDEX ON vector_store USING HNSW (embedding vector_cosine_ops);
 ```
----
-## RAG Pipeline Flow
 
-<img width="2026" height="830" alt="image" src="https://github.com/user-attachments/assets/0a993744-4d8f-4896-a2e7-7c0e721c8889" />
+<p>7. Clone the project</p>
+
+```
+git clone https://github.com/keerthikumarn/springboot-vectordb-rag.git
+```
+
+<p>8. Compile the project</p>
+
+```
+mvn clean install
+```
+
+<p>9. Run the project</p>
+
+```
+mvn spring-boot:run
+```
+
+<p>10. Enter the postman POST request</p>
+
+```
+curl -X POST -H "Content-type: application/json" http://localhost:8099/ai/rag -d '{     "message":"does mount everest happens to be in the region of Japan?" }'
+```
+
+  
+  
+<h2>💻 Built with</h2>
+
+Technologies used in the project:
+
+*   Springboot
+*   PostgreSQL
+*   VectorDB
+*   ChatModel
+*   Embeddings
+*   OpenRouter API
+*   Java 21
